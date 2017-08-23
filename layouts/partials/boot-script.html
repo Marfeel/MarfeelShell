@@ -1,0 +1,680 @@
+<script type="text/javascript">
+    var domain = document.domain,
+        redirectLanding = domain === 'hubdem.marfeel.com' ||
+        domain === 'discover.marfeel.com' ||
+        domain === 'enjoy.marfeel.com',
+        mrf = window.marfeel = window.marfeel || {};
+
+    mrf.mrfUrlTo = redirectLanding ? "discover.marfeel.com/statics/marfeel/redirect/index.html?to=http://" + "truththeory.com" : "truththeory.com";
+    mrf.forceXL = "true" === "true";
+
+    /*
+     * Copyright (c) 2015 by Marfeel Solutions (http://www.marfeel.com)
+     * All Rights Reserved.
+     *
+     * NOTICE:  All information contained herein is, and remains
+     * the property of Marfeel Solutions S.L and its suppliers,
+     * if any.  The intellectual and technical concepts contained
+     * herein are proprietary to Marfeel Solutions S.L and its
+     * suppliers and are protected by trade secret or copyright law.
+     * Dissemination of this information or reproduction of this material
+     * is strictly forbidden unless prior written permission is obtained
+     * from Marfeel Solutions SL.
+     */
+
+    (function(e) {
+        function t() {}
+
+        function m(e, t, n, r) {
+            var i = new XMLHttpRequest;
+            r = r || {}, i.timeout = r.timeout || 1e4, i.open("POST", e), i.setRequestHeader("Content-type", r.contentType), !!r.withCredentials && (i.withCredentials = !0), i.onreadystatechange = function() {
+                i.readyState === f && n()
+            }, i.send(t)
+        }
+
+        function g(e, t, n, r) {
+            return "v=1&tid=" + e + "&cid=" + t + "&t=event&ec=Error&ea=GardaMarfeel_" + n + "&el=" + s.locationHref + r + "&ev=0"
+        }
+
+        function y(t, n, r) {
+            return {
+                msg: "GardaMarfeel_" + t + ": " + (n ? n : s.locationHref),
+                dl: s.locationHref,
+                dh: s.tenantUrl,
+                ua: s.navigatorUserAgent,
+                mdos: s.navigatorPlatform,
+                mdt: e.marfeel.theme.deviceType,
+                cid: r,
+                ts: Date.now()
+            }
+        }
+
+        function b(e, t) {
+            return !!e.match(/^http(s)?:\/\/t.co/) || t.indexOf("Twitter") >= 0
+        }
+
+        function w() {
+            var e = l * 24 * 60 * 60 * 1e3;
+            if (!E() || S()) s.setCookieValue("MarfeelGarda", "YES", e), s.setCookieValue("MarfeelKrks", "0", e), s.setCookieValue("MarfeelCreation", Date.now(), e), s.setCookieValue("FromMarfeelOnError", "NO", e), s.setCookieValue("FromMarfeel", "NO", e), s.setCookieValue("fromt", "NO", e)
+        }
+
+        function E() {
+            return parseInt(s.getCookieValue("MarfeelCreation")) > v
+        }
+
+        function S() {
+            return s.getCookieValue("MarfeelGarda") === "NO" || s.getCookieValue("fromt") === "YES"
+        }
+
+        function x() {
+            return /windows phone/i.test(s.navigatorUserAgent)
+        }
+
+        function T() {
+            var t = /.*(iPad|iPhone|iPod).*OS ([0-9]+)_([0-9]).*\) (.*?)\/.*/g,
+                n = t.exec(s.navigatorUserAgent),
+                r;
+            if (n) {
+                r = s.navigatorPlatform === "iPad" ? s.navigatorPlatform : n[1], u = {
+                    name: r.toLowerCase(),
+                    os: "ios",
+                    version: parseInt(n[2]),
+                    subversion: parseInt(n[3]),
+                    browser: n[4] == "CriOS" ? "chrome" : n[4] == "Version" ? "safari" : "unknown",
+                    type: r === "iPad" ? e.marfeel.forceXL ? "xl" : "l" : "s"
+                };
+                if (u.version >= 5) return !0
+            }
+            return !1
+        }
+
+        function N() {
+            var t = /.*Android ([0-9])\.([0-9]).*; (.*) Build.* (Chrome|.+)\/.*? (Mobile|.+ )?.*Safari(.*OPR)?/g,
+                n = t.exec(s.navigatorUserAgent),
+                r = s.windowWidth,
+                i = s.windowHeight,
+                o = r > i ? "landscape" : "portrait",
+                a = o === "portrait" && r <= 635 || o === "landscape" && i <= 635;
+            if (n) {
+                u = {
+                    name: n[3],
+                    os: "android",
+                    version: parseInt(n[1]),
+                    subversion: parseInt(n[2]),
+                    browser: n[6] ? "opera" : n[4] == "Chrome" ? "chrome" : "aosp",
+                    type: n[5] ? "s" : a ? "m" : e.marfeel.forceXL ? "xl" : "l",
+                    chromeVersion: C()
+                };
+                if (u.version >= 4) return !0
+            }
+            return !1
+        }
+
+        function C() {
+            var e = s.navigatorUserAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+            return e ? parseInt(e[2], 10) : !1
+        }
+
+        function k() {
+            var e = /.*BB10; ([\d\w]*)\).*Version\/(\d*)\.(\d*)\..*Mobile.*/g,
+                t = e.exec(s.navigatorUserAgent);
+            if (t) {
+                u = {
+                    name: t[1],
+                    os: "bb10",
+                    version: parseInt(t[2]),
+                    subversion: parseInt(t[3]),
+                    type: "s"
+                };
+                if (u.version === 10 && u.subversion >= 1) return !0
+            }
+            return !1
+        }
+
+        function L() {
+            var e = /\bSilk\b/g;
+            return e.test(s.navigatorUserAgent) ? (u = {
+                name: "kindle",
+                os: "kindle",
+                type: "m"
+            }, !0) : !1
+        }
+
+        function A(e, t) {
+            return e = e ? e : s.tenantUrl, t ? e + t : e
+        }
+
+        function O() {
+            document.addEventListener("DOMContentLoaded", function() {
+                !e.mrfIsDOMComplete && s.trackError("DOMRendering", "", function() {
+                    o.redirectToTenantOnError(s.locationHref, "_self", !0)
+                })
+            })
+        }
+
+        function M() {
+            e.onerror = _
+        }
+
+        function _(e, t) {
+            s.isMarfeelScript(t) && s.trackError("InitializeMain", e, function() {
+                o.redirectToTenantOnError(s.locationHref, "_self", !0)
+            })
+        }
+
+        function D() {
+            s.setDBValue("fromt", "NO", t, t)
+        }
+        var n = "MARFEEL_DB",
+            r = 6,
+            i = ["garda", "sections"];
+        e.marfeel = e.marfeel || {};
+        var s, o, u = {},
+            a = 2,
+            f = 4,
+            l = 21,
+            c = .5,
+            h = 30,
+            p = .15,
+            d = 20,
+            v = 1378983741490;
+        s = e.marfeel.GardaMarfeelUtil = {
+            locationHref: e.location.href,
+            locationHash: e.location.hash,
+            locationSearch: e.location.search,
+            locationPathname: e.location.pathname,
+            navigatorPlatform: e.navigator.platform,
+            navigatorUserAgent: e.navigator.userAgent,
+            navigatorStandalone: e.navigator.standalone || e.matchMedia && e.matchMedia("(display-mode: standalone)").matches,
+            deviceCordova: e.device && e.device.cordova || e.cordova,
+            documentDomain: document.domain,
+            windowWidth: e.screen.width,
+            windowHeight: e.screen.height,
+            tenantUrl: null,
+            _documentReferrer: null,
+            get documentReferrer() {
+                if (this._documentReferrer === null) {
+                    var e = document.referrer;
+                    b(e, this.navigatorUserAgent) ? this._documentReferrer = "twitter" : e.indexOf("facebook.com") >= 0 ? this._documentReferrer = "facebook" : e.indexOf("flipboard") >= 0 ? this._documentReferrer = "flipboard" : e.indexOf("http://feedly.com") >= 0 ? this._documentReferrer = "feedly" : e.indexOf("lnkd.in") >= 0 ? this._documentReferrer = "linkedin" : this._documentReferrer = document.referrer
+                }
+                return this._documentReferrer
+            },
+            loadConfigFromAttributes: function() {
+                var t = e.marfeel.mrfUrlTo;
+                t && (this.tenantUrl = "http://" + e.marfeel.mrfUrlTo)
+            },
+            getCookieValue: function(e) {
+                var t, n, r = document.cookie.split(";");
+                e = e.trim();
+                for (t = 0; t < r.length; t += 1) {
+                    n = r[t], n = n.split("=");
+                    if (n[0].trim() === e) return n[1]
+                }
+                return null
+            },
+            setCookieValue: function(e, t, n, r) {
+                var i = e + "=" + t;
+                i += ";expires=" + (n > 0 ? (new Date(Date.now() + n)).toGMTString() : 0), i += ";domain=" + (r || this.documentDomain), i += ";path=/", document.cookie = i
+            },
+            setDBValue: function(t, s, o, u) {
+                if (!("serviceWorker" in navigator)) return u(new Error("SERVICEWORKER_NOT_SUPPORTED"));
+                if (!("indexedDB" in e) || !e.indexedDB) return u(new Error("INDEXEDDB_NOT_SUPPORTED"));
+                var a = indexedDB.open(n, r);
+                a.onsuccess = function(e) {
+                    var n = e.target.result,
+                        r = n.transaction([i[0]], "readwrite").objectStore(i[0]).put(s, t);
+                    r.onsuccess = o, r.onerror = u
+                }, a.onerror = u, a.onupgradeneeded = function(e) {
+                    var t = e.target.result,
+                        n = Array.prototype.slice.call(t.objectStoreNames);
+                    i.forEach(function(e) {
+                        n.indexOf(e) === -1 && t.createObjectStore(e)
+                    })
+                }
+            },
+            getDomain: function() {
+                var e = this.documentDomain.split("."),
+                    t = e.length;
+                return "." + e[t - 2] + "." + e[t - 1]
+            },
+            setLocation: function(t, n, r) {
+                r ? e.location = t : e.open(t, n || "_self", "location=no,enableViewportScale=yes")
+            },
+            getHost: function(e) {
+                return e.replace(/https?:\/\//, "").split("/")[0]
+            },
+            getReferrer: function() {
+                return document.referrer
+            },
+            reloadMarfeel: function() {
+                e.location.reload()
+            },
+            trackError: function(e, t, n) {
+                var r = s.generateUUID(),
+                    i = t ? "-" + t : "",
+                    o = 3,
+                    u = function() {
+                        --o, !o && n()
+                    },
+                    a = "http://www.google-analytics.com/collect",
+                    f = {
+                        contentType: "application/x-www-form-urlencoded"
+                    },
+                    l = "https://cosmos.marfeel.com/varys_errors-" + Date.now() + "/gardaerror",
+                    c = JSON.stringify(y(e, i, r)),
+                    h = {
+                        contentType: "application/json"
+                    };
+                m(a, g("UA-27070218-1", r, e, i), u, f), m(a, g("UA-27070218-13", r, e, i), u, f), m(l, c, u, h)
+            },
+            generateUUID: function() {
+                return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(e) {
+                    var t = Math.random() * 16 | 0,
+                        n = e == "x" ? t : t & 3 | 8;
+                    return n.toString(16)
+                })
+            },
+            isMarfeelScript: function(t) {
+                return !o.isLocalhost() && (t.indexOf(e.marfeel.resourcesRoot + "/" + e.marfeel.definition.name + "/custom." + e.marfeel.theme.deviceType + ".js") >= 0 || t.indexOf(e.marfeel.resourcesHost + "/statics/marfeel/core." + e.marfeel.theme.deviceType + ".js") >= 0)
+            }
+        }, o = e.marfeel.GardaMarfeel = {
+            getDevice: function() {
+                return u
+            },
+            getEnvironment: function() {
+                var e = s.documentDomain;
+                return e === "localhost" || e === "localhost.marfeel.com" || e.indexOf("192.") === 0 ? "localhost" : /^(?!www).+\.marfeel\.com/.test(e) ? "pre" : "pro"
+            },
+            getRuntimeEnvinroment: function() {
+                return s.navigatorStandalone ? "standalone" : s.deviceCordova ? "native" : "browser"
+            },
+            isEnabled: function() {
+                return s.locationSearch.indexOf("marfeelgarda=off") === -1
+            },
+            isDeviceSupported: function() {
+                return x() ? !1 : T() || L() || N() || k()
+            },
+            isLocalhost: function() {
+                return o.getEnvironment() === "localhost"
+            },
+            redirectToTenant: function(e, t, n, r, i) {
+                function o() {
+                    s.setLocation(A(e, r), t, n)
+                }
+                t !== "_self" ? (s.setCookieValue("FromMarfeel", "YES", c * 60 * 1e3), s.setCookieValue("fromt", "YES", c * 60 * 1e3), s.setDBValue("fromt", "YES", o, o)) : o()
+            },
+            redirectToTenantOnError: function(e, t, n) {
+                this.redirectToTenantOnErrorWithTimeout(h * 60 * 1e3, function() {
+                    s.setLocation(A(e), t, n)
+                })
+            },
+            uninstallServiceWorkers: function(e) {
+                navigator.serviceWorker.getRegistrations().then(function(e) {
+                    return Promise.all(e.map(function(e) {
+                        return e.unregister()
+                    }))
+                }).then(e)
+            },
+            reload: function() {
+                e.location.reload(!0)
+            },
+            redirectToUnsupportedDevice: function() {
+                function e() {
+                    this.redirectToTenantOnErrorWithTimeout(p * 60 * 1e3, this.reload)
+                }
+                "serviceWorker" in navigator ? this.uninstallServiceWorkers(e.bind(this)) : e.call(this)
+            },
+            redirectToTenantOnErrorWithTimeout: function(e, t) {
+                s.setCookieValue("FromMarfeelOnError", "YES", e), s.setCookieValue("fromt", "YES", e), s.setDBValue("fromt", "YES", t, t)
+            },
+            reloadWithFallbackToClassicVersion: function(e, t, n) {
+                if (/mrfRetry=yes/.test(document.cookie)) {
+                    if (o.isLocalhost()) return;
+                    t = t || "Unknown", n = n || "";
+                    var r = n + " [env: " + this.getRuntimeEnvinroment() + "]" + " [from: " + s.getCookieValue("mrfErrorReferrer") + "]";
+                    s.trackError(t, r, function() {
+                        o.redirectToTenantOnError(e)
+                    })
+                } else s.setCookieValue("mrfRetry", "yes", 3e4), s.setCookieValue("mrfErrorReferrer", s.getReferrer() || "NO_REFERRER", 3e4), s.reloadMarfeel()
+            },
+            markLeavingUser: function() {
+                var e = parseInt(s.getCookieValue("MarfeelKrks")),
+                    t = l * 24 * 60 * 60 * 1e3,
+                    n = d * 365 * 24 * 60 * 60 * 1e3;
+                e += 1, s.setCookieValue("MarfeelKrks", e.toString(), t), e >= a && (s.setCookieValue("MarfeelGarda", "NO", t), s.setCookieValue("MarfeelKrkUser", "YES", n))
+            },
+            perform: function() {
+                this.isEnabled() && (this.isDeviceSupported() ? (O(), M(), w(), D()) : s.tenantUrl && (this.getEnvironment() === "pro" ? this.redirectToUnsupportedDevice() : this.redirectToTenantOnError(s.tenantUrl, "_self", !0)))
+            }
+        }, s.loadConfigFromAttributes(), e.jasmine || o.perform()
+    })(window);
+
+    (function(GardaMarfeel) {
+        function getDeviceType() {
+
+            return 's';
+
+        }
+
+        function isRequestAborted(request) {
+            return request.status === 0 && !request.getAllResponseHeaders();
+        }
+
+        window.mrfBootHelper = {
+            deviceType: getDeviceType(),
+            requestAndCallOnWindowLoad: function(resourcePath, onLoad) {
+                var request = new XMLHttpRequest();
+                request.open('get', resourcePath);
+                request.onreadystatechange = function() {
+                    if (request.readyState === 4) {
+                        var response = request.responseText;
+                        if (request.status === 200 && response) {
+                            if (document.readyState === 'complete') {
+                                onLoad(response);
+                            } else {
+                                window.addEventListener('load', onLoad.bind(this, response));
+                            }
+                        } else if (isRequestAborted(request)) {
+                            GardaMarfeel.reloadWithFallbackToClassicVersion("", "BootHelper", " ResourcePath: " + resourcePath + " - RequestStatus: 0");
+                        } else {
+                            window.marfeel.GardaMarfeelUtil.trackError("BootHelper", " ResourcePath: " + resourcePath + " - RequestStatus: " + request.status, function() {
+                                GardaMarfeel.redirectToTenantOnError("");
+                            });
+                        }
+                    }
+                };
+                request.send();
+            }
+
+        };
+    })(window.marfeel.GardaMarfeel);
+
+    (function(window, document) {
+        function getRuntimeEnvironment(GardaMarfeel) {
+            return GardaMarfeel.getRuntimeEnvinroment();
+        }
+
+        function goIfReady() {
+            !this.bootProcess.completed && this.isMarfeelReady() && this.dom.onready();
+        }
+
+        //----------------------------------------------------
+        // Configure Marfeel env
+        //----------------------------------------------------
+        var isNative = getRuntimeEnvironment(window.marfeel.GardaMarfeel) === 'native',
+            deviceType = window.mrfBootHelper.deviceType,
+
+            mrf = window.marfeel = {
+                GardaMarfeelUtil: window.marfeel.GardaMarfeelUtil,
+                GardaMarfeel: window.marfeel.GardaMarfeel,
+                startTime: window.marfeel.startTime,
+                isDev: false,
+                theme: {
+                    name: isNative && deviceType !== "s" ? "cherokee" : "k",
+                    deviceType: deviceType,
+                    buildNumber: 0,
+                    customBuildNumber: "170823130833",
+                    ampShadowSrc: "https://bc.marfeel.com/statics/amp/dist/shadow-v0.js"
+                },
+                dom: {
+                    jsReady: false,
+                    cssReady: false,
+                    contentReady: false,
+                    coreReady: false,
+                    onready: null,
+                    inconsReady: false
+                },
+                bootProcess: {
+                    completed: false,
+                    cssLoadInParallel: "true" === "true",
+                    preBootMadLoader: "true" === "true" && "" === "true"
+                },
+                definition: {
+                    uri: "truththeory.com",
+                    title: "The 9/11 First Responders Betrayed By The Government (movie) - TruthTheory",
+                    twitter: "Truththeorycom",
+                    cookiesPolicy: "" || undefined,
+                    name: "index",
+                    icon: "https://bc.marfeel.com/statics/truththeory.com/index/icon@2x.png?build=0",
+                    pubDate: "1503485404567",
+                    sections: [],
+                    userInterface: {
+                        lang: "en" || "en",
+                        themeName: "mediaPublisher",
+                        googleAnalytics: "" || "",
+                        adex: "false" || false
+                    },
+                    cherokee: {
+                        androidApp: "" || null,
+                        iosApp: "" || null,
+                        notExtractedArticlesInMainWindow: "" || false
+                    },
+                    configuration: {
+                        pageViewTracker: {
+                            tenantQuerySelector: "" || null,
+                            useDefaultNextArticleSelector: "" || false
+                        }
+                    }
+                },
+                tenant: {
+                    id: "truththeory.com",
+                    hostName: ""
+                },
+                resourcesPath: "https://bc.marfeel.com/statics/truththeory.com/index",
+                resourcesHost: "https://bc.marfeel.com",
+                externalResourcesHost: "https://bc.marfeel.com",
+                resourcesRoot: "https://bc.marfeel.com/statics/truththeory.com",
+                basePath: "https://bc.marfeel.com/mrf/truththeory.com/",
+                ads: "",
+                marfeeltwister: "",
+                embeds: "",
+                features: {
+                    adsOnHoldUntilCookies: "" || false,
+                    visitsThatJumpToFirstSection: "" || 10,
+                    deepLinking: "" || false,
+                    smartphone: "" || false,
+                    inlineAdsInDetails: "" || false,
+                    adInsertionStrategyS: "" || "preInserted",
+                    inlineAdsFirstSkyS: "" || false,
+                    usesProxy: "" || false,
+                    suggestionsEmailAddress: "" || "contribute@marfeel.com",
+                    adsOnGallery: "" || "sky",
+                    adsOnGalleryS: "" || "" || "s320",
+                    interInGalleryS: "" || "" || false,
+                    interInGalleryFixedPosition: "" || false,
+                    adServerChainEnabled: "" || false,
+                    madLoadStrategy: "" || "onScreen",
+                    nextPageHint: false,
+                    twitterFormatWeb: "" || false,
+                    twitterFormatNative: "" || false,
+                    taboolaConfiguration: "" || null,
+                    mgidConfiguration: "" || null,
+                    contentAdConfiguration: "" || null,
+                    preloadComments: "" || false,
+                    numMosaicSquaresOnScreen: "" || 3,
+                    tenantFacebookAppID: "" || false,
+                    pwa: "" || "0",
+                    expirationPopUp: "" || 0,
+                    alternativeMadTypes: "" || false,
+                    enableUnsecureMedia: "" || false,
+                    disableAMPCacheForImages: "" || false,
+                    disableProxyScripts: "" || false,
+                    disableSwipeOnZoomableImage: "" || false,
+                    shareCounterThreshold: "" || 0,
+                    socialCampaign: {
+
+                    }
+                },
+                isMarfeelReady: function() {
+                    return this.dom.jsReady && this.dom.contentReady && (this.bootProcess.cssLoadInParallel || (this.dom.cssReady && this.dom.iconsReady));
+                },
+                setCssIsReady: function() {
+                    this.dom.cssReady = true;
+                    goIfReady.call(this);
+                },
+                setIconsIsReady: function() {
+                    this.dom.iconsReady = true;
+                    goIfReady.call(this);
+                },
+                setContentIsReady: function() {
+                    this.dom.contentReady = true;
+                    goIfReady.call(this);
+                },
+                c: window.c
+            };
+    })(window, document);
+
+    (function(window) {
+
+        window.marfeel.TWISTER_CONFIG = {
+            "adNetworks": [{
+                "name": "adx",
+                "accountId": null,
+                "adTags": null
+            }, {
+                "name": "pushNotificationsBanner",
+                "accountId": null,
+                "adTags": null
+            }, {
+                "name": "adsense",
+                "accountId": null,
+                "adTags": null
+            }],
+            "businessModel": "ENTERPRISE"
+        }
+
+    })(window);
+
+    (function() {
+        //----------------------------------------------------
+        // Load device specific data
+        //----------------------------------------------------
+        var mrf = window.marfeel,
+            bootHelper = window.mrfBootHelper,
+            deviceType = bootHelper.deviceType,
+            deviceDataLoaded = true,
+            responseNode = document.createElement('span'),
+            definitionSections = mrf.definition.sections,
+            encodedUri = "",
+            invalidate = "",
+            timestamp = "1503485404567" || "1503485404567" || mrf.definition.pubDate,
+            dev = "";
+
+        if (!deviceDataLoaded) {
+            var sectionNameQueryParam = "home" ? "&sectionName=home" : "";
+            var articleUriQueryParam = encodedUri ? "&articleUri=" + encodedUri : "";
+            var invalidateQueryParam = invalidate ? "&invalidate=" + invalidate : "";
+            var runtimeEnvironment = "false" === "true" ? "&runtimeEnvironment=NATIVE" : "";
+            window.mrfBootHelper.requestAndCallOnWindowLoad(mrf.basePath + mrf.definition.name + "." + mrf.theme.name + "." + deviceType + ".html?t=" + timestamp + sectionNameQueryParam + articleUriQueryParam + "&marfeelresourceshost=https://bc.marfeel.com" + dev + "&marfeelads=" + runtimeEnvironment + invalidateQueryParam,
+                function(content) {
+                    responseNode.innerHTML = content;
+                    document.body.appendChild(responseNode);
+
+                    setTimeout(function letDomToBuild() {
+                        mrf.setContentIsReady();
+                    }, 50);
+                });
+        } else {
+            mrf.setContentIsReady();
+        }
+
+        //----------------------------------------------------
+        // Configure deep linked sections
+        //----------------------------------------------------
+
+        definitionSections.push({
+            id: "home",
+            title: "Home",
+            uri: "https://truththeory.com/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "home",
+            title: "Home",
+            uri: "https://truththeory.com/page/2",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "top",
+            title: "Top",
+            uri: "https://truththeory.com/top/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "top",
+            title: "Top",
+            uri: "https://truththeory.com/top/page/2",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "news",
+            title: "News",
+            uri: "https://truththeory.com/category/articles/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "news",
+            title: "News",
+            uri: "https://truththeory.com/category/articles/page/2",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "movies",
+            title: "Movies",
+            uri: "https://truththeory.com/category/movies/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "movies",
+            title: "Movies",
+            uri: "https://truththeory.com/category/movies/page/2",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "videos",
+            title: "Videos",
+            uri: "https://truththeory.com/category/videos/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        definitionSections.push({
+            id: "videos",
+            title: "Videos",
+            uri: "https://truththeory.com/category/videos/page/2/",
+            twitter: "",
+            type: "DEFAULT"
+        });
+
+        //----------------------------------------------------
+        // Customization extension point
+        //----------------------------------------------------
+
+    }());
+
+    <!--Overrided on demos-->
+    (function() {
+        window.AMP_CONFIG = {
+            cdnUrl: "https://bc.marfeel.com" || "http://localhost.marfeel.com",
+            scriptPath: "/statics0/amp/dist/v0/",
+            localDev: "false"
+        }
+    }());
+    window.mrfIsDOMComplete = true;
+</script>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+
+        <link rel="preload" href="/k.s.js?buildNumber=0" as="script">
+
+        <link rel="preload" href="https://bc.marfeel.com/statics/amp/dist/shadow-v0.js?buildNumber=0" as="script">
+
+        <script async src="https://bc.marfeel.com/statics0/js/ps/www.googletagservices.com/tag/js/gpt.js"></script>
+
+        {{ partial "meta.html" . }}
+        {{ partial "styles.html" . }}
+        {{ partial "boot-script.html" . }}
+
+        <script async crossorigin onerror="window.marfeel.GardaMarfeel.reloadWithFallbackToClassicVersion('', 'JSLoadError')" src="/k.s.js?buildNumber=0"></script>
+
+        {{ partial "amp-extensions.html" }}
+
+        <link rel="preload" as="image" id="deferred-resources" href="https://bc.marfeel.com/statics/marfeel/resources/icons/below.svg?build=0" />
+        <link rel="preload" as="style" type="text/css" id="deferred-styles" href="https://bc.marfeel.com/statics/marfeel/k/shell.below.s.css?buildNumber=0" />
+        <link rel="prefetch" as="style" type="text/css" href="https://bc.marfeel.com/statics/marfeel/k/details.core.s.css?buildNumber=0" />
+
+    </head>
+
+    <body id="mrf-body" class=" mrf-mosaic mrf-initializing kTheme">
+        {{ partial "icons.html" . }}
+
+        <div id="mrf-mosaic" class="mrf-viewNavigator mrf-mosaicContainer uses3d mrf-fixedElement" tabindex="0" data-viewNavigatorDecorator="limitedBullets" data-mrf-navigationlevel="mosaic" data-mrf-continuousReadingScroll="up">
+
+            <div class="mrf-column mrf-col1 mrf-current mrf-preloadedColumn" data-sectionName="home" data-mrf-preload-strategy="viewport">
+                {{ partial "ssr-content.html" . }}
+            </div>
+            <div class="mrf-column mrf-col2" data-mrf-preload-strategy="viewport"></div>
+            <div class="mrf-column mrf-col3" data-mrf-preload-strategy="viewport"></div>
+
+            <div id="mrf-transitionerOverlay"></div>
+        </div>
+
+        {{ partial "header.html" . }}
+
+        <div id="mrf-details" class="mrf-itemPopup mrf-detailsContent mrf-fixedElement" tabindex="0">
+            <div id="mrf-content" class="mrf-viewNavigator uses3d mrf-fixedElement" data-viewNavigatorDecorator="limitedBullets" data-viewNavigatorDecoratorClass="mrf-detailsLimitedPagerContainer" data-mrf-navigationlevel="details" data-mrf-continuousReadingScroll="up">
+
+                <div class="mrf-column mrf-col1"></div>
+                <div class="mrf-column mrf-col2"></div>
+                <div class="mrf-column mrf-col3"></div>
+
+            </div>
+        </div>
+
+        {{ partial "details-header.html" . }}
+
+        {{ partial "control-bars.html" . }}
+
+        <amp-image-lightbox id="mrf-imageViewer" layout="nodisplay"></amp-image-lightbox>
+
+        {{ partial "sharebar.html" }}
+
+        <amp-analytics type="googleanalytics" id="marfeelGoogleAnalytics">
+            <script type="application/json">
+                { "requests": { "marfeelPageview": "${pageview}&ds=${ds}&cd6=${cd6}&cg1=${cg1}" }, "vars": { "account": "UA-27070218-1", "ds": "marfeel_browser_k", "cd6": "truththeory.com", "cg1": "section", "documentLocation": "https://truththeory.com/", "title": "TruthTheory -" }, "triggers": { "trackMarfeelPageview": { "on": "visible", "request": "marfeelPageview" } } }
+            </script>
+        </amp-analytics>
+
+        {{ partial "sections-model.html" . }}
+    </body>
+</html>

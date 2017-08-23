@@ -1,0 +1,78 @@
+<header id="mrf-header" class="mrf-header mrf-collapsableHeader mrf-fixedElement mrf-active" data-mrf-preventInteraction='true' tabindex="3">
+    
+    <button type="button" on="tap:mrf-lateralMenu.toggle" class="mrf-button mrf-menuButton mrf-ButtonIcon">
+
+        <svg class="mrf-Icon ">
+            <use xlink:href="#mrf-Icon--menu"></use>
+        </svg>
+
+    </button>
+
+    <!-- Levels are reversed to avoid use of z-index: https://aerotwist.com/blog/on-translate3d-and-layer-creation-hacks/ -->
+    <div class="mrf-levels">
+        <div class="mrf-thirdLevel">
+            <div class="mrf-mosaicPagerContainer"></div>
+        </div>
+
+        <div class="mrf-level mrf-secondLevel">
+
+            <amp-carousel height="26" id="ampSectionsIndicator" data-mrf-id="sectionsIndicator">
+                <ul class="mrf-sectionsIndicator">
+
+                    <li class="mrf-section mrf-current photo mrf-type-default" data-mrf-sectionName="home" data-shortcut="navigateToSection:home">
+                        <a class="mrf-button" href="https://truththeory.com/">
+                    Home
+                </a>
+                    </li>
+
+                    <li class="mrf-section main mrf-type-default" data-mrf-sectionName="top" data-shortcut="navigateToSection:top">
+                        <a class="mrf-button" href="https://truththeory.com/top/">
+                    Top
+                </a>
+                    </li>
+
+                    <li class="mrf-section main mrf-type-default" data-mrf-sectionName="news" data-shortcut="navigateToSection:news">
+                        <a class="mrf-button" href="https://truththeory.com/category/articles/">
+                    News
+                </a>
+                    </li>
+
+                    <li class="mrf-section main mrf-type-default" data-mrf-sectionName="movies" data-shortcut="navigateToSection:movies">
+                        <a class="mrf-button" href="https://truththeory.com/category/movies/">
+                    Movies
+                </a>
+                    </li>
+
+                    <li class="mrf-section main mrf-type-default" data-mrf-sectionName="videos" data-shortcut="navigateToSection:videos">
+                        <a class="mrf-button" href="https://truththeory.com/category/videos/">
+                    Videos
+                </a>
+                    </li>
+
+                </ul>
+            </amp-carousel>
+
+        </div>
+
+        <div class="mrf-level mrf-firstLevel mainColor" data-sectionThumbUIControl='logoThumb'>
+
+            <a href="//truththeory.com" class="mrf-tenantLogo"></a>
+
+            <button id='470229' type="button" class="mrf-buttonToWhite mrf-button  mrf-ButtonIcon mrf-pn__bell">
+
+                <svg class="mrf-Icon ">
+                    <use xlink:href="#mrf-Icon--pn__bell"></use>
+                </svg>
+
+            </button>
+
+            <div class="mrf-timestamp-wrapper">
+
+                <div class="mrf-timestamp" data-mrf-timeformat="hh:mmtt" data-mrf-timestamp="1503486720676">00:00
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</header>
