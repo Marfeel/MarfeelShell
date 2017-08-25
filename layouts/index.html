@@ -2,30 +2,27 @@
 <html lang="en">
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
 
-        <link rel="preload" href="/k.s.js?buildNumber=0" as="script">
-
-        <link rel="preload" href="https://bc.marfeel.com/statics/amp/dist/shadow-v0.js?buildNumber=0" as="script">
-
-        <script async src="https://bc.marfeel.com/statics0/js/ps/www.googletagservices.com/tag/js/gpt.js"></script>
-
         {{ partial "meta.html" . }}
         {{ partial "styles.html" . }}
         {{ partial "boot-script.html" . }}
 
-        <script async crossorigin onerror="window.marfeel.GardaMarfeel.reloadWithFallbackToClassicVersion('', 'JSLoadError')" src="/k.s.js?buildNumber=0"></script>
+        <script async crossorigin onerror="window.marfeel.GardaMarfeel.reloadWithFallbackToClassicVersion('', 'JSLoadError')" src="k.s.js?buildNumber=0"></script>
 
         {{ partial "amp-extensions.html" }}
 
-        <link rel="preload" as="image" id="deferred-resources" href="https://bc.marfeel.com/statics/marfeel/resources/icons/below.svg?build=0" />
-        <link rel="preload" as="style" type="text/css" id="deferred-styles" href="https://bc.marfeel.com/statics/marfeel/k/shell.below.s.css?buildNumber=0" />
-        <link rel="prefetch" as="style" type="text/css" href="https://bc.marfeel.com/statics/marfeel/k/details.core.s.css?buildNumber=0" />
+        <link rel="preload" as="image" id="deferred-resources" 
+            href="https://bc.marfeel.com/statics/marfeel/resources/icons/below.svg?build=0" />
+        <link rel="preload" as="style" type="text/css" id="deferred-styles" 
+            href="https://bc.marfeel.com/statics/marfeel/k/shell.below.s.css?buildNumber=0" />
 
     </head>
 
     <body id="mrf-body" class=" mrf-mosaic mrf-initializing kTheme">
         {{ partial "icons.html" . }}
 
-        <div id="mrf-mosaic" class="mrf-viewNavigator mrf-mosaicContainer uses3d mrf-fixedElement" tabindex="0" data-viewNavigatorDecorator="limitedBullets" data-mrf-navigationlevel="mosaic" data-mrf-continuousReadingScroll="up">
+        <div id="mrf-mosaic" class="mrf-viewNavigator mrf-mosaicContainer uses3d mrf-fixedElement" 
+            tabindex="0" data-viewNavigatorDecorator="limitedBullets" data-mrf-navigationlevel="mosaic" 
+                data-mrf-continuousReadingScroll="up">
 
             <div class="mrf-column mrf-col1 mrf-current mrf-preloadedColumn" data-sectionName="home" data-mrf-preload-strategy="viewport">
                 {{ partial "ssr-content.html" . }}
